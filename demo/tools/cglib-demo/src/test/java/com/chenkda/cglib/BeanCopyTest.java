@@ -3,31 +3,26 @@ package com.chenkda.cglib;
 import com.chenkeda.cglib.pojo.User;
 import com.chenkeda.cglib.pojo.UserVo;
 import net.sf.cglib.beans.BeanCopier;
-import org.junit.BeforeClass;
+import org.junit.After;
 import org.junit.Test;
 
 import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 public class BeanCopyTest {
 
-    private static BeanCopier beanCopier;
-
-    @BeforeClass
-    public static void beforeClass() {
-        beanCopier = BeanCopier.create(User.class, UserVo.class, true);
-    }
+    private BeanCopier beanCopier;
 
     @Test
     public void userToUserVoTest() {
+        beanCopier = BeanCopier.create(User.class, UserVo.class, false);
         User user = getUser();
         UserVo userVo = new UserVo();
         beanCopier.copy(user, userVo, null);
 
         assertBasicUser(user, userVo);
-        assertNull(userVo.getPhone());
+        assertEquals(user.getPhone(), userVo.getPhone());
     }
 
     private void assertBasicUser(User user, UserVo userVo) {
@@ -47,6 +42,7 @@ public class BeanCopyTest {
 
     @Test
     public void userToUserVoPhoneConvertTest() {
+        beanCopier = BeanCopier.create(User.class, UserVo.class, true);
         User user = getUser();
         UserVo userVo = new UserVo();
         beanCopier.copy(user, userVo, (value, target, context) -> {
@@ -62,5 +58,11 @@ public class BeanCopyTest {
 
         assertBasicUser(user, userVo);
         assertEquals("188****5531", userVo.getPhone());
+    }
+
+
+    @After
+    public void after() {
+        beanCopier = null;
     }
 }
