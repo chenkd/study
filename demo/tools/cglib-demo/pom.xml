@@ -9,11 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tools</artifactId>
+    <artifactId>cglib-demo</artifactId>
 
-    <modules>
-        <module>hutool-demo</module>
-        <module>cglib-demo</module>
-    </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+    </dependencies>
 </project>
