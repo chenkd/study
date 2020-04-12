@@ -18,5 +18,10 @@
             <artifactId>cglib</artifactId>
             <version>3.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.chenkeda</groupId>
+            <artifactId>tool-pojo</artifactId>
+            <version>${version}</version>
+        </dependency>
     </dependencies>
 </project>
