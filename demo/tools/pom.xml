@@ -19,6 +19,7 @@
         <module>commons-beanutils-demo</module>
         <module>tool-pojo</module>
         <module>avro-demo</module>
+        <module>xstream-demo</module>
     </modules>
 
 </project>
