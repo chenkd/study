@@ -1,17 +1,17 @@
 package com.chenkeda.leetcode;
 
 import lombok.Data;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class Sum {
 
     @Test
-    public void SumOfTwoNum() {
+    public void testTwoSum() {
         int[] answer = twoSum(new int[]{2, 7, 11, 15}, 9);
         assertEquals(0, answer[0]);
         assertEquals(1, answer[1]);
@@ -30,7 +30,7 @@ public class Sum {
     }
 
     @Test
-    public void AddOfTowNum() {
+    public void testAddTwoNumbers() {
         {
             ListNode l1 = new ListNode(2, new ListNode(4, new ListNode(3)));
             ListNode l2 = new ListNode(5, new ListNode(6, new ListNode(4)));
