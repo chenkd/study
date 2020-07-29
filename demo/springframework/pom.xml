@@ -3,24 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.chenkeda</groupId>
         <artifactId>demo</artifactId>
+        <groupId>com.chenkeda</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tools</artifactId>
+    <artifactId>springframework</artifactId>
     <packaging>pom</packaging>
-
     <modules>
-        <module>hutool-demo</module>
-        <module>cglib-demo</module>
-        <module>commons-beanutils-demo</module>
-        <module>tool-pojo</module>
-        <module>avro-demo</module>
-        <module>xstream-demo</module>
-        <module>cglib-demo</module>
+        <module>transaction-demo</module>
     </modules>
+
 
 </project>
