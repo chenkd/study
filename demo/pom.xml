@@ -12,6 +12,7 @@
         <module>tools</module>
         <module>springframework</module>
         <module>jdk</module>
+        <module>leetcode</module>
     </modules>
 
     <properties>
