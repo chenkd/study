@@ -45,4 +45,71 @@ public class Str {
         }
         return maxLength;
     }
+
+
+    @Test
+    public void testLongestPalindrome() {
+        assertEquals("bab", longestPalindrome("babad"));
+        assertEquals("bb", longestPalindrome("cbbd"));
+        assertEquals("bbb", longestPalindrome("bbb"));
+        assertEquals("bbbb", longestPalindrome("bbbb"));
+        assertEquals("", longestPalindrome(""));
+    }
+
+    /*
+    给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+     */
+    public String longestPalindrome(String s) {
+        if (s.length() <= 1) {
+            return s;
+        }
+        char[] chars = s.toCharArray();
+        int max = 0;
+        String maxPalindrome = null;
+        for (int i = 0; i < chars.length; i++) {
+            String tempMax = calculateMax1(i, chars);
+            if (tempMax.length() > max) {
+                maxPalindrome = tempMax;
+                max = tempMax.length();
+            }
+            tempMax = calculateMax2(i, chars);
+            if (tempMax.length() > max) {
+                maxPalindrome = tempMax;
+                max = tempMax.length();
+            }
+        }
+        return maxPalindrome;
+    }
+
+    private String calculateMax1(int i, char[] chars) {
+        int left = i;
+        int right = i;
+        while (left <= right && left >= 0 && right < chars.length) {
+            if (chars[left] == chars[right]) {
+                left--;
+                right++;
+            } else {
+                break;
+            }
+        }
+        left++;
+        right--;
+        return new String(chars).substring(left, right + 1);
+    }
+
+    private String calculateMax2(int i, char[] chars) {
+        int left = i - 1;
+        int right = i;
+        while (left <= right && left >= 0 && right < chars.length) {
+            if (chars[left] == chars[right]) {
+                left--;
+                right++;
+            } else {
+                break;
+            }
+        }
+        left++;
+        right--;
+        return new String(chars).substring(left, right + 1);
+    }
 }
