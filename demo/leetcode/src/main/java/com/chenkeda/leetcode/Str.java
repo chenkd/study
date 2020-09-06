@@ -2,6 +2,8 @@ package com.chenkeda.leetcode;
 
 import org.junit.Test;
 
+import java.util.function.Function;
+
 import static org.junit.Assert.assertEquals;
 
 public class Str {
@@ -47,19 +49,78 @@ public class Str {
     }
 
 
+    /*
+    暴力
+     */
     @Test
-    public void testLongestPalindrome() {
-        assertEquals("bab", longestPalindrome("babad"));
-        assertEquals("bb", longestPalindrome("cbbd"));
-        assertEquals("bbb", longestPalindrome("bbb"));
-        assertEquals("bbbb", longestPalindrome("bbbb"));
-        assertEquals("", longestPalindrome(""));
+    public void testLongestPalindrome1() {
+        testLongestPalindrome(this::longestPalindrome1);
+    }
+
+    public void testLongestPalindrome(Function<String, String> f) {
+        assertEquals("bab", f.apply("babad"));
+        assertEquals("bb", f.apply("cbbd"));
+        assertEquals("bbb", f.apply("bbb"));
+        assertEquals("bbbb", f.apply("bbbb"));
+        assertEquals("", f.apply(""));
+        assertEquals("a", f.apply("a"));
+        assertEquals("a", f.apply("ac"));
+        assertEquals("bb", f.apply("bb"));
+        assertEquals("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", f.apply("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+    }
+
+    /*
+    动态规划
+     */
+    @Test
+    public void testLongestPalindrome2() {
+        testLongestPalindrome(this::longestPalindrome2);
+    }
+
+    private String longestPalindrome2(String s) {
+        if (s != null && s.length() < 2) {
+            return s;
+        }
+        String maxPalindrome = "";
+        Boolean[][] isPalindrome = new Boolean[s.length()][s.length()];
+        for (int i = 0; i < s.length(); i++) {
+            isPalindrome[i][i] = true;
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = s.length() - 1; j >=i; j--) {
+                if (isPalindrome(s, i, j, isPalindrome)) {
+                    String palindrome = s.substring(i, j + 1);
+                    if (palindrome.length() > maxPalindrome.length()) {
+                        maxPalindrome = palindrome;
+                    }
+                }
+            }
+        }
+        return maxPalindrome;
+    }
+
+    private boolean isPalindrome(String str, int start, int end, Boolean[][] isPalindrome) {
+        if (isPalindrome[start][end] != null && !isPalindrome[start][end]) {
+            return false;
+        }
+        if (start >= end) {
+            return true;
+        }
+        if (str.charAt(start) == str.charAt(end)) {
+            if (isPalindrome(str, start + 1, end - 1, isPalindrome)) {
+                isPalindrome[start][end] = true;
+                return true;
+            }
+        }
+        isPalindrome[start][end] = false;
+        return false;
     }
 
     /*
     给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
      */
-    public String longestPalindrome(String s) {
+    public String longestPalindrome1(String s) {
         if (s.length() <= 1) {
             return s;
         }
